@@ -28,7 +28,7 @@ class NotificationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        return Participant.objects.create(**validated_data)
+        return Notification.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.mturk_id = validated_data.get('mturk_id', instance.mturk_id)

@@ -1,10 +1,10 @@
 from django.db import models
 
 class Participant(models.Model):
-    restart_group = models.BooleanField()
+    restart_group = models.CharField(max_length=30)
     message_group = models.CharField(max_length=30)
-    mturk_id = models.CharField(max_length=30)
-    hash_id = models.CharField(max_length=30)
+    mturk_id = models.CharField(max_length=50)
+    hash_id = models.CharField(max_length=50)
     install_date = models.DateTimeField()
     windows_version = models.CharField(max_length=50)
     dot_net_version = models.CharField(max_length=30)
@@ -15,8 +15,9 @@ class Participant(models.Model):
 
 class Notification(models.Model):
     # participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
-    mturk_id = models.CharField(max_length=30)
-    sequence = models.IntegerField()
+    mturk_id = models.CharField(max_length=50)
+    hash_id = models.CharField(max_length=50, default="")
+    sequence = models.CharField(max_length=5)
     noti_date = models.DateTimeField()
     duration = models.FloatField()
     response = models.CharField(max_length=20)

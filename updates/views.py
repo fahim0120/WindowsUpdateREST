@@ -18,10 +18,10 @@ class ParticipantView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        print("DEBUG: HELLO", type(request.data['mturk_id']))
+        # print("DEBUG IN PARTICIPANT: ", type(request.data))
         serializer = ParticipantSerializer(data=request.data)
 
-        print(request.data, serializer.is_valid(), serializer.validated_data)
+        # print(request.data, serializer.is_valid(), serializer.validated_data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -30,8 +30,8 @@ class ParticipantView(APIView):
 
 
 class NotificationView(APIView):
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         notifications = Notification.objects.all()
@@ -39,10 +39,10 @@ class NotificationView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        print("DEBUG: HELLO", type(request.data['mturk_id']))
+        # print("DEBUG IN NOTIFICATION: ", type(request.data))
         serializer = NotificationSerializer(data=request.data)
 
-        print(request.data, serializer.is_valid(), serializer.validated_data)
+        # print(request.data, serializer.is_valid(), serializer.validated_data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
