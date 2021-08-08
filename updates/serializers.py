@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Participant, Notification
+from .models import Participant, Notification, Ping
 
 class ParticipantSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,5 +36,21 @@ class NotificationSerializer(serializers.ModelSerializer):
         instance.noti_date = validated_data.get('noti_date', instance.noti_date)
         instance.duration = validated_data.get('duration', instance.duration)
         instance.response = validated_data.get('response', instance.response)
+        instance.save()
+        return instance
+
+
+class PingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ping
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return Ping.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.mturk_id = validated_data.get('mturk_id', instance.mturk_id)
+        instance.group = validated_data.get('group', instance.group)
+        instance.ping_date = validated_data.get('ping_date', instance.ping_date)
         instance.save()
         return instance

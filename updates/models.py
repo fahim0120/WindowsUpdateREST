@@ -26,4 +26,13 @@ class Notification(models.Model):
         return f'MTurk: {self.mturk_id} Sequence: {self.sequence} Response: {self.response}'
 
 
+class Ping(models.Model):
+    mturk_id = models.CharField(max_length=50)
+    group = models.CharField(max_length=30)
+    ping_date = models.DateTimeField()
+
+    def __str__(self):
+        return f'MTurk: {self.mturk_id} Pinged: {self.ping_date}'
+
+
 

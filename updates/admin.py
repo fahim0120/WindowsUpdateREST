@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Participant, Notification
+from .models import Participant, Notification, Ping
 
 admin.site.site_header = 'Admin Panel'
 admin.site.site_title = 'Admin Area'
@@ -18,4 +18,5 @@ admin.site.index_title = 'Welcome to Updates Admin Panel'
 
 admin.site.register(Participant)
 admin.site.register(Notification)
+admin.site.register(Ping)
 #admin.site.register(Participant, ParticipantAdmin)
