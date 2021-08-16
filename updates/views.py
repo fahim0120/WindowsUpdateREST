@@ -1,11 +1,13 @@
+from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from .models import Participant, Notification, Ping
-from .serializers import ParticipantSerializer, NotificationSerializer, PingSerializer
+import os
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from .serializers import ParticipantSerializer, NotificationSerializer, PingSerializer
 
 
 class ParticipantView(APIView):
@@ -69,3 +71,35 @@ class PingView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+def installation(request):
+    return render(request, 'installation.html')
+
+
+def uninstallation(request):
+    return render(request, 'uninstallation.html')
+
+
+def download(request, path):
+    path_to_version = {
+        "f97c5d": "PowerMeterApp1.zip",
+        }
+
+    version = path_to_version[path]
+    file_path = os.path.join(settings.STATIC_ROOT, version)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type='application/force-download')
+            response['Content-Disposition'] = f'attachment; filename={version}'
+            return response
+
+    raise Http404
+
+    # print(os.getcwd())
+    # zip_file = open('PowerMeterApp1.zip', 'r')
+    # response = HttpResponse(zip_file, content_type='application/force-download')
+    # response['Content-Disposition'] = 'attachment; filename="%s"' % 'PowerMeterAppOne.zip'
+    # return response
+
